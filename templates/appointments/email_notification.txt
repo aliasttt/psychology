@@ -1,0 +1,18 @@
+New Appointment Request
+
+Client Information:
+- Name: {{ appointment.full_name }}
+- Email: {{ appointment.email }}
+- Phone: {{ appointment.phone }}
+
+Appointment Details:
+- Preferred Date: {{ appointment.preferred_date }}
+- Preferred Time: {{ appointment.preferred_time }}
+- Service: {{ appointment.service|default:"Not specified" }}
+
+Message:
+{{ appointment.message|default:"No additional message." }}
+
+---
+Submitted on: {{ appointment.created_at }}
+Status: {{ appointment.get_status_display }}

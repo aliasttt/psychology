@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Appointment Request Submitted - Psychology Clinic{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+            <div class="mb-4">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 80px;"></i>
+            </div>
+            <h1 class="mb-4">Thank You!</h1>
+            <p class="lead mb-4">Your appointment request has been submitted successfully.</p>
+            <p class="text-muted mb-4">We will review your request and contact you within 24 hours to confirm your appointment.</p>
+            <div class="d-grid gap-2">
+                <a href="{% url 'home' %}" class="btn btn-primary">Return to Home</a>
+                <a href="{% url 'services:service_list' %}" class="btn btn-outline-primary">View Our Services</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

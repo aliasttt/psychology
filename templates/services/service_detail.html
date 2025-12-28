@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ service.meta_title|default:service.name }} - Psychology Clinic{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ service.meta_description|default:service.short_description }}">
+{% if service.image %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ service.image.url }}">
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'services:service_list' %}">Services</a></li>
+                    <li class="breadcrumb-item active">{{ service.name }}</li>
+                </ol>
+            </nav>
+            
+            <h1 class="display-5 mb-4">{{ service.name }}</h1>
+            
+            {% if service.image %}
+            <img src="{{ service.image.url }}" class="img-fluid rounded mb-4" alt="{{ service.name }}">
+            {% endif %}
+            
+            <div class="service-info mb-4">
+                {% if service.price %}
+                <p class="h4 text-primary">${{ service.price }}</p>
+                {% else %}
+                <p class="h5 text-muted">Contact for pricing</p>
+                {% endif %}
+                {% if service.duration %}
+                <p class="text-muted"><i class="bi bi-clock"></i> Duration: {{ service.duration }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="service-description mb-5">
+                <h3>About This Service</h3>
+                <p class="lead">{{ service.short_description }}</p>
+                <div class="mt-4">
+                    {{ service.full_description|linebreaks }}
+                </div>
+            </div>
+            
+            <!-- FAQs -->
+            {% if faqs %}
+            <section class="mb-5">
+                <h3 class="mb-4">Frequently Asked Questions</h3>
+                <div class="accordion" id="faqAccordion">
+                    {% for faq in faqs %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq{{ faq.id }}">
+                            <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ faq.id }}">
+                                {{ faq.question }}
+                            </button>
+                        </h2>
+                        <div id="collapse{{ faq.id }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                {{ faq.answer|linebreaks }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+            
+            <div class="text-center mb-5">
+                <a href="{% url 'appointments:appointment_request' %}" class="btn btn-primary btn-lg">Book This Service</a>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Other Services</h5>
+                </div>
+                <div class="card-body">
+                    {% for other_service in other_services %}
+                    <div class="mb-3">
+                        <h6><a href="{{ other_service.get_absolute_url }}" class="text-decoration-none">{{ other_service.name }}</a></h6>
+                        <p class="text-muted small">{{ other_service.short_description|truncatewords:15 }}</p>
+                    </div>
+                    {% if not forloop.last %}<hr>{% endif %}
+                    {% empty %}
+                    <p class="text-muted">No other services available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.meta_title|default:post.title }} - Psychology Clinic{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ post.meta_description|default:post.excerpt }}">
+{% if post.featured_image %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ post.featured_image.url }}">
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <article class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'blog:post_list' %}">Blog</a></li>
+                    {% if post.category %}
+                    <li class="breadcrumb-item"><a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a></li>
+                    {% endif %}
+                    <li class="breadcrumb-item active">{{ post.title }}</li>
+                </ol>
+            </nav>
+            
+            <!-- Post Header -->
+            <header class="mb-4">
+                {% if post.category %}
+                <span class="badge bg-primary mb-2">{{ post.category.name }}</span>
+                {% endif %}
+                <h1 class="display-5 mb-3">{{ post.title }}</h1>
+                <div class="text-muted mb-3">
+                    <i class="bi bi-person"></i> {{ post.author }} | 
+                    <i class="bi bi-calendar"></i> {{ post.published_at|date:"F d, Y" }} | 
+                    <i class="bi bi-eye"></i> {{ post.views }} views
+                </div>
+                {% if post.tags.all %}
+                <div class="mb-3">
+                    {% for tag in post.tags.all %}
+                    <a href="{% url 'blog:tag_posts' tag.slug %}" class="badge bg-secondary text-decoration-none me-1">
+                        {{ tag.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </header>
+            
+            <!-- Featured Image -->
+            {% if post.featured_image %}
+            <img src="{{ post.featured_image.url }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
+            {% endif %}
+            
+            <!-- Post Content -->
+            <div class="post-content">
+                {{ post.content|linebreaks }}
+            </div>
+            
+            <hr class="my-5">
+            
+            <!-- Related Posts -->
+            {% if related_posts %}
+            <section class="mt-5">
+                <h3>Related Posts</h3>
+                <div class="row g-3">
+                    {% for related_post in related_posts %}
+                    <div class="col-md-4">
+                        <div class="card">
+                            {% if related_post.featured_image %}
+                            <img src="{{ related_post.featured_image.url }}" class="card-img-top" alt="{{ related_post.title }}" style="height: 150px; object-fit: cover;">
+                            {% endif %}
+                            <div class="card-body">
+                                <h6 class="card-title">{{ related_post.title }}</h6>
+                                <a href="{{ related_post.get_absolute_url }}" class="btn btn-sm btn-outline-primary">Read</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+        </div>
+    </article>
+</div>
+{% endblock %}

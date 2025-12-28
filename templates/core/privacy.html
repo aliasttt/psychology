@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Privacy Policy - Psychology Clinic{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="mb-4">Privacy Policy</h1>
+            <p class="text-muted">Last updated: {% now "F d, Y" %}</p>
+            
+            <section class="mb-4">
+                <h3>1. Introduction</h3>
+                <p>We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.</p>
+            </section>
+            
+            <section class="mb-4">
+                <h3>2. Information We Collect</h3>
+                <p>We collect information that you provide directly to us, including:</p>
+                <ul>
+                    <li>Name and contact information</li>
+                    <li>Email address</li>
+                    <li>Phone number</li>
+                    <li>Appointment preferences</li>
+                    <li>Messages and inquiries</li>
+                </ul>
+            </section>
+            
+            <section class="mb-4">
+                <h3>3. How We Use Your Information</h3>
+                <p>We use the information we collect to:</p>
+                <ul>
+                    <li>Process appointment requests</li>
+                    <li>Respond to your inquiries</li>
+                    <li>Send you important updates</li>
+                    <li>Improve our services</li>
+                </ul>
+            </section>
+            
+            <section class="mb-4">
+                <h3>4. Data Security</h3>
+                <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+            </section>
+            
+            <section class="mb-4">
+                <h3>5. Your Rights</h3>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Access your personal data</li>
+                    <li>Request correction of inaccurate data</li>
+                    <li>Request deletion of your data</li>
+                    <li>Object to processing of your data</li>
+                </ul>
+            </section>
+            
+            <section class="mb-4">
+                <h3>6. Contact Us</h3>
+                <p>If you have questions about this Privacy Policy, please contact us through our <a href="{% url 'contact:contact' %}">contact form</a>.</p>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

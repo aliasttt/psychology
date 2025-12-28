@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Book an Appointment - Psychology Clinic{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="mb-4">Book an Appointment</h1>
+            <p class="lead text-muted mb-4">Fill out the form below to request an appointment. We'll contact you to confirm your booking.</p>
+            
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit Appointment Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="mt-4 p-3 bg-light rounded">
+                <h5><i class="bi bi-info-circle"></i> What happens next?</h5>
+                <ul class="mb-0">
+                    <li>We'll review your request within 24 hours</li>
+                    <li>You'll receive a confirmation email or phone call</li>
+                    <li>We'll work with you to find the best time slot</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
